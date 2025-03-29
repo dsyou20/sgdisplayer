@@ -1,3 +1,16 @@
-# Blade_2_Template_App
+# sg displayer
 
-Blade 2 Template Application. This application provides a simple template with all 3 recommended UI styles and documentation on how to build your first Blade application.
+24.03.30  
+- 블레이드2 예시 샘플 안드로이드 빌드 성공
+- 샘플앱 구조 파악중
+
+
+24.04.06
+- 구동 확인 및 텍스트 표시 완료
+- api 연동  시작
+
+
+24.04.14
+- api 연동 완료
+- 앱 배포 완료
+
