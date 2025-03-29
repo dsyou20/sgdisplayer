@@ -8,5 +8,11 @@
     <item android:id="@+id/action_menu_blade" android:title="@string/showBladeToast" android:icon="@drawable/baseline_copyright_24" android:onClick="showBlade"/>
     <item android:id="@+id/action_menu_lunch_bottomlock" android:title="@string/showAroundContent" android:icon="@drawable/baseline_info_24" android:onClick="showbottomlock"/>
     <item android:id="@+id/action_menu_lunch_pop_up" android:title="@string/showPopUpMenu" android:icon="@drawable/baseline_android_24"  android:onClick="showpopUp" />
+    
+    <!-- 날씨 업데이트 토글 메뉴 항목 -->
+    <item android:id="@+id/action_menu_weather" 
+          android:title="날씨 활성화" 
+          android:icon="@drawable/baseline_info_24" 
+          android:onClick="toggleWeather"/>
 
 </menu>

@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.vuzix.hud.actionmenu.CustomActionMenuActivity;
 
+import devkit.blade.vuzix.com.blade_template_app.weather.Weather;
+import devkit.blade.vuzix.com.blade_template_app.weather.WeatherManager;
+
 /**
  * Secondary Template Activity. This activity demonstrates how to create a Bottom Lock Navigation style.
  * This style is the same style used in the Vuzix Blade Settings Application.
@@ -20,7 +23,7 @@ import com.vuzix.hud.actionmenu.CustomActionMenuActivity;
  * For more information on the ActionMenuActivity read the JavaDocs in Android Studio or download the
  * Java docs at:  https://www.vuzix.com/support/Downloads_Drivers
  */
-public class around_content_template_activity extends CustomActionMenuActivity {
+public class around_content_template_activity extends CustomActionMenuActivity implements WeatherManager.OnWeatherUpdateListener {
 
     private int statusCount = 1;
 
@@ -30,6 +33,10 @@ public class around_content_template_activity extends CustomActionMenuActivity {
     private TextView mainTitle;
     private TextView mainValue;
     private ImageView mainImage;
+    private TextView weatherText; // 날씨 정보 텍스트뷰
+    
+    // 날씨 관리자
+    private WeatherManager weatherManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,40 @@ public class around_content_template_activity extends CustomActionMenuActivity {
         mainTitle = findViewById(R.id.main_title);
         mainValue = findViewById(R.id.main_value);
         mainImage = findViewById(R.id.icon);
+        weatherText = findViewById(R.id.weather_text); // 날씨 텍스트뷰 찾기
+        
+        // 날씨 관리자 초기화
+        weatherManager = WeatherManager.getInstance();
+        weatherManager.init(this);
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        
+        // 날씨 업데이트 리스너 등록
+        weatherManager.addListener(this);
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        
+        // 날씨 업데이트 리스너 해제
+        weatherManager.removeListener(this);
+    }
+    
+    // WeatherManager.OnWeatherUpdateListener 인터페이스 구현
+    @Override
+    public void onWeatherUpdated(Weather weather) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (weatherText != null) {
+                    weatherText.setText(weather.toString());
+                }
+            }
+        });
     }
 
     /**

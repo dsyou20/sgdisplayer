@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.vuzix.hud.actionmenu.CustomActionMenuActivity;
 import com.vuzix.hud.actionmenu.DefaultActionMenuItemView;
 
+import devkit.blade.vuzix.com.blade_template_app.weather.Weather;
+import devkit.blade.vuzix.com.blade_template_app.weather.WeatherManager;
+
 
 /**
  * Main Template Activity, This application follows the Center Lock style of the Vuzix Camera App.
@@ -21,7 +24,7 @@ import com.vuzix.hud.actionmenu.DefaultActionMenuItemView;
  * For more information on the ActionMenuActivity read the JavaDocs in Android Studio or download the
  * Java docs at:  https://www.vuzix.com/support/Downloads_Drivers
  */
-public class center_content_template_activity extends CustomActionMenuActivity {
+public class center_content_template_activity extends CustomActionMenuActivity implements WeatherManager.OnWeatherUpdateListener {
 
     private boolean statusState = true;
     private int statusCount = 1;
@@ -29,8 +32,13 @@ public class center_content_template_activity extends CustomActionMenuActivity {
     private MenuItem HelloMenuItem;
     private MenuItem VuzixMenuItem;
     private MenuItem BladeMenuItem;
+    private MenuItem WeatherMenuItem;
     private SwitchMenuItemView switchMenuItemView;
     private TextView mainText;
+    private TextView weatherText;
+    
+    // 날씨 관리자
+    private WeatherManager weatherManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,19 @@ public class center_content_template_activity extends CustomActionMenuActivity {
         setContentView(R.layout.activity_center_content_template_style);
 
         mainText = findViewById(R.id.main_text);
+        weatherText = findViewById(R.id.weather_text);
+        
+        // 날씨 관리자 초기화
+        weatherManager = WeatherManager.getInstance();
+        weatherManager.init(this); // 컨텍스트 전달 및 저장된 상태 복원
+        
+        // 앱 시작 시 자동으로 날씨 업데이트 시작
+        if (!weatherManager.isUpdateActive()) {
+            weatherManager.startWeatherUpdates();
+        }
+        
+        // 날씨 텍스트뷰 표시
+        weatherText.setVisibility(android.view.View.VISIBLE);
     }
 
     /**
@@ -46,11 +67,18 @@ public class center_content_template_activity extends CustomActionMenuActivity {
      */
     @Override
     protected void onResume() {
-        // ActionMenuActivity의 onResume을 직접 호출하는 대신, 필요한 초기화만 수행합니다
-        // super.onResume() 호출을 생략하고 대신 Activity의 onResume을 호출합니다
         super.onResume();
         
-        // 필요한 경우 추가 초기화 코드를 여기에 작성합니다
+        // 날씨 업데이트 리스너 등록
+        weatherManager.addListener(this);
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        
+        // 날씨 업데이트 리스너 해제
+        weatherManager.removeListener(this);
     }
 
     /**
@@ -69,6 +97,16 @@ public class center_content_template_activity extends CustomActionMenuActivity {
         VuzixMenuItem = menu.findItem(R.id.action_menu_vuzix);
         BladeMenuItem = menu.findItem(R.id.action_menu_blade);
         BladeMenuItem.setActionView(switchMenuItemView = new SwitchMenuItemView(this));
+        
+        // 날씨 메뉴 아이템 추가
+        WeatherMenuItem = menu.findItem(R.id.action_menu_weather);
+        if (WeatherMenuItem == null) {
+            // 메뉴 항목이 없으면 프로그래밍 방식으로 추가
+            WeatherMenuItem = menu.add(Menu.NONE, R.id.action_menu_weather, Menu.NONE, 
+                    weatherManager.isUpdateActive() ? "날씨 비활성화" : "날씨 활성화");
+            WeatherMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        
         updateMenuItems();
 
         return true;
@@ -103,8 +141,43 @@ public class center_content_template_activity extends CustomActionMenuActivity {
         VuzixMenuItem.setEnabled(false);
         BladeMenuItem.setEnabled(false);
         switchMenuItemView.setSwitchState(statusState, statusCount);
+        
+        // 날씨 메뉴 아이템 텍스트 업데이트
+        if (WeatherMenuItem != null) {
+            WeatherMenuItem.setTitle(weatherManager.isUpdateActive() ? "날씨 비활성화" : "날씨 활성화");
+        }
     }
 
+    // 날씨 업데이트 토글 메서드
+    public void toggleWeather(MenuItem item) {
+        if (weatherManager.isUpdateActive()) {
+            weatherManager.stopWeatherUpdates();
+            showToast("날씨 업데이트가 중지되었습니다.");
+        } else {
+            weatherManager.startWeatherUpdates();
+            showToast("날씨 업데이트가 시작되었습니다.");
+        }
+        
+        // 메뉴 아이템 텍스트 업데이트
+        if (WeatherMenuItem != null) {
+            WeatherMenuItem.setTitle(weatherManager.isUpdateActive() ? "날씨 비활성화" : "날씨 활성화");
+        }
+    }
+
+    // WeatherManager.OnWeatherUpdateListener 인터페이스 구현
+    @Override
+    public void onWeatherUpdated(Weather weather) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (weatherText != null) {
+                    weatherText.setText(weather.toString());
+                    // 날씨 업데이트 시 항상 표시되도록 설정
+                    weatherText.setVisibility(android.view.View.VISIBLE);
+                }
+            }
+        });
+    }
 
     //Action Menu Click events
     //This events where register via the XML for the menu definitions.
@@ -176,5 +249,4 @@ public class center_content_template_activity extends CustomActionMenuActivity {
             }
         }
     }
-
 }

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".around_content_template_activity">
 
     <!--Like any normal Android Application -->
     <!--Bottom Lock style means that the View or real-state available AROUND the center of the screen.
@@ -58,5 +61,15 @@
         android:gravity="center"
         android:text="@string/AroundContentInfo2"/>
 
+    <!-- 날씨 정보를 표시하는 TextView -->
+    <TextView
+        android:id="@+id/weather_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:textColor="#00BCD4"
+        android:text="날씨 정보가 여기에 표시됩니다"
+        android:visibility="visible"/>
 
 </RelativeLayout>

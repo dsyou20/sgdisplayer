@@ -18,4 +18,15 @@
         android:text="@string/CenterContentInfo"
         android:layout_alignParentTop="true"/>
 
+    <!-- 날씨 정보를 표시하는 TextView -->
+    <TextView
+        android:id="@+id/weather_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_text"
+        android:layout_marginTop="16dp"
+        android:textColor="#00BCD4"
+        android:text="날씨 정보가 여기에 표시됩니다"
+        android:visibility="gone"/>
+
 </RelativeLayout>
