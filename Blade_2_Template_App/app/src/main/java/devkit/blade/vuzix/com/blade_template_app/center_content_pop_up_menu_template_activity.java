@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.vuzix.hud.actionmenu.ActionMenuActivity;
+import com.vuzix.hud.actionmenu.CustomActionMenuActivity;
 import com.vuzix.hud.actionmenu.DefaultActionMenuItemView;
 
 
@@ -22,7 +22,7 @@ import com.vuzix.hud.actionmenu.DefaultActionMenuItemView;
  * For more information on the ActionMenuActivity read the JavaDocs in Android Studio or download the
  * Java docs at:  https://www.vuzix.com/support/Downloads_Drivers
  */
-public class center_content_pop_up_menu_template_activity extends ActionMenuActivity {
+public class center_content_pop_up_menu_template_activity extends CustomActionMenuActivity {
 
     private boolean statusState = true;
     private int statusCount = 1;

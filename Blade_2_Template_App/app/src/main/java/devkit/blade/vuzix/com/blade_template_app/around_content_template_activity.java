@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.vuzix.hud.actionmenu.ActionMenuActivity;
+import com.vuzix.hud.actionmenu.CustomActionMenuActivity;
 
 /**
  * Secondary Template Activity. This activity demonstrates how to create a Bottom Lock Navigation style.
@@ -20,7 +20,7 @@ import com.vuzix.hud.actionmenu.ActionMenuActivity;
  * For more information on the ActionMenuActivity read the JavaDocs in Android Studio or download the
  * Java docs at:  https://www.vuzix.com/support/Downloads_Drivers
  */
-public class around_content_template_activity extends ActionMenuActivity {
+public class around_content_template_activity extends CustomActionMenuActivity {
 
     private int statusCount = 1;
 

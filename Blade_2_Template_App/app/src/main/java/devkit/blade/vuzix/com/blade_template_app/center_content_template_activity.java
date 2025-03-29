@@ -3,13 +3,14 @@ package devkit.blade.vuzix.com.blade_template_app;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.vuzix.hud.actionmenu.ActionMenuActivity;
+import com.vuzix.hud.actionmenu.CustomActionMenuActivity;
 import com.vuzix.hud.actionmenu.DefaultActionMenuItemView;
 
 
@@ -20,7 +21,7 @@ import com.vuzix.hud.actionmenu.DefaultActionMenuItemView;
  * For more information on the ActionMenuActivity read the JavaDocs in Android Studio or download the
  * Java docs at:  https://www.vuzix.com/support/Downloads_Drivers
  */
-public class center_content_template_activity extends ActionMenuActivity {
+public class center_content_template_activity extends CustomActionMenuActivity {
 
     private boolean statusState = true;
     private int statusCount = 1;
@@ -37,6 +38,19 @@ public class center_content_template_activity extends ActionMenuActivity {
         setContentView(R.layout.activity_center_content_template_style);
 
         mainText = findViewById(R.id.main_text);
+    }
+
+    /**
+     * ActionMenuActivity의 onResume 메서드를 오버라이드하여 BroadcastReceiver 등록 문제를 해결합니다.
+     * 상위 클래스의 onResume 메서드 대신 직접 필요한 초기화를 수행합니다
+     */
+    @Override
+    protected void onResume() {
+        // ActionMenuActivity의 onResume을 직접 호출하는 대신, 필요한 초기화만 수행합니다
+        // super.onResume() 호출을 생략하고 대신 Activity의 onResume을 호출합니다
+        super.onResume();
+        
+        // 필요한 경우 추가 초기화 코드를 여기에 작성합니다
     }
 
     /**
