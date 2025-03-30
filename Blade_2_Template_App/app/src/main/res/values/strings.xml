@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Blade_Template</string>
+    <string name="app_name">온도 정보</string>
     <string name="appwidget_text_light">Example Widget in Light Mode</string>
     <string name="appwidget_text_dark">Example Widget in Dark Mode</string>
     <string name="appwidget_text">Example Widget default state</string>
@@ -25,4 +25,15 @@
         To Hide the Action Menu do a two finger tap(back gesture)</string>
     <string name="AroundContentInfo">Around Content style means that the View or real estate available is AROUND the center of the screen.</string>
     <string name="AroundContentInfo2">The Action menu moves in the CENTER of the main UI area.</string>
+    
+    <!-- 음성 명령어 -->
+    <string name="voice_light_theme">밝은 테마</string>
+    <string name="voice_dark_theme">어두운 테마</string>
+    <string name="voice_update">정보 업데이트</string>
+    <string name="voice_stop">업데이트 중지</string>
+    
+    <!-- 정보 표시 -->
+    <string name="loading_info">온도 정보를 불러오는 중...</string>
+    <string name="info_updated">온도 정보가 업데이트되었습니다</string>
+    <string name="info_update_stopped">온도 정보 업데이트가 중지되었습니다</string>
 </resources>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     tools:context=".center_content_template_activity">
 
     <!-- Like any Android Application, you will need a Layout to define your UI and real state for
@@ -11,22 +12,36 @@
     <!--Center Lock style means that the View or real-state available is in the center and its lock
     to that position. The Action menus move underneath the main UI.
      This is the simples and more common scenario-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/main_text"
-        android:text="@string/CenterContentInfo"
-        android:layout_alignParentTop="true"/>
 
-    <!-- 날씨 정보를 표시하는 TextView -->
+    <!-- 스마트 글래스에 보육 지역정보를 표시하는 레이아웃 -->
+    <!-- 제목 텍스트 -->
+
+    <!-- 메인 정보 표시 영역 -->
     <TextView
-        android:id="@+id/weather_text"
+        android:id="@+id/main_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/main_text"
-        android:layout_marginTop="16dp"
-        android:textColor="#00BCD4"
-        android:text="날씨 정보가 여기에 표시됩니다"
-        android:visibility="gone"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#33000000"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="right"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:shadowColor="#80000000"
+        android:shadowDx="1.5"
+        android:shadowDy="1.5"
+        android:shadowRadius="2"
+        android:text="@string/loading_info"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        android:visibility="visible" />
 
 </RelativeLayout>

@@ -1,25 +1,16 @@
 <resources>
 
     <!-- Base application theme. -->
-    <!-- Notice that utilize as parent the HudTheme Theme from HUD.RESOURCES. -->
-    <style name="AppTheme" parent="HudTheme">
+    <style name="AppTheme" parent="android:Theme.DeviceDefault">
         <!-- Customize your theme here. -->
-        <item name="imageHeaderTintColor">@color/hud_green</item>
-        <item name="valueTextColor">@color/hud_white</item>
-        <item name="backgroundColor">@color/hud_dark_gray</item>
-        <item name="circleColorNormal">@color/hud_transparent</item>
-        <item name="selectionColor">@color/hud_green</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <!-- Notice that utilize as parent the HudTheme.Light Theme from HUD.RESOURCES. -->
-    <style name="AppTheme.Light" parent="HudTheme.Light">
+    <style name="AppTheme.Light" parent="android:Theme.DeviceDefault.Light">
         <!-- Customize your theme here. -->
-        <item name="imageHeaderTintColor">@color/hud_transparent</item>
-        <item name="valueTextColor">@color/hud_transparent</item>
-        <item name="backgroundColor">@color/hud_transparent</item>
-        <item name="circleColorNormal">@color/hud_dark_gray</item>
-        <item name="selectionColor">@color/hud_transparent</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
-
 
 </resources>
