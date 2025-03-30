@@ -6,11 +6,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 
+
+import com.vuzix.hud.resources.DynamicThemeApplication;
+
+
 /**
  * 앱의 기본 Application 클래스
  * 애플리케이션 수준의 초기화와 리소스 관리를 담당합니다.
  */
-public class BladeSampleApplication extends Application {
+public class BladeSampleApplication extends DynamicThemeApplication {
 
     @Override
     public void onCreate() {
@@ -26,5 +30,15 @@ public class BladeSampleApplication extends Application {
         } else {
             return super.registerReceiver(receiver, filter);
         }
+    }
+
+    @Override
+    protected int getNormalThemeResId() {
+        return R.style.AppTheme;
+    }
+
+    @Override
+    protected int getLightThemeResId() {
+        return R.style.AppTheme_Light;
     }
 }
