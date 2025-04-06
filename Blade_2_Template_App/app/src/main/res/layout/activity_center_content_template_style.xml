@@ -31,25 +31,65 @@
         <!-- 아이콘 -->
         <ImageView
             android:id="@+id/section_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginBottom="10dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="5dp"
             android:src="@drawable/ic_environment"
             android:contentDescription="섹션 아이콘" />
 
-        <!-- 정보 텍스트 -->
+        <!-- 첫 번째 정보 -->
         <TextView
-            android:id="@+id/main_text"
+            android:id="@+id/text_info1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:shadowColor="#80000000"
-            android:shadowDx="1.5"
-            android:shadowDy="1.5"
-            android:shadowRadius="2" />
+            android:layout_marginBottom="4dp" />
+
+        <!-- 두 번째 정보 -->
+        <TextView
+            android:id="@+id/text_info2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="4dp" />
+
+        <!-- 세 번째 정보 -->
+        <TextView
+            android:id="@+id/text_info3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="4dp" />
+
+        <!-- 네 번째 정보 -->
+        <TextView
+            android:id="@+id/text_info4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="4dp" />
+
+        <!-- 다섯 번째 정보 -->
+        <TextView
+            android:id="@+id/text_info5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center" />
 
     </LinearLayout>
 

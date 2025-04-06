@@ -9,6 +9,7 @@ import android.text.Html;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.view.View;
 
 import java.util.Locale;
 
@@ -25,7 +26,7 @@ public class center_content_template_activity extends Activity implements Region
     private static final String TAG = "TempInfoActivity";
     
     // UI 요소
-    private TextView mainText;
+    private TextView[] infoTexts = new TextView[5];
     private ImageView sectionIcon;
     
     // 정보 관리자
@@ -66,7 +67,11 @@ public class center_content_template_activity extends Activity implements Region
         handler = new Handler(Looper.getMainLooper());
         
         // UI 요소 초기화
-        mainText = findViewById(R.id.main_text);
+        infoTexts[0] = findViewById(R.id.text_info1);
+        infoTexts[1] = findViewById(R.id.text_info2);
+        infoTexts[2] = findViewById(R.id.text_info3);
+        infoTexts[3] = findViewById(R.id.text_info4);
+        infoTexts[4] = findViewById(R.id.text_info5);
         sectionIcon = findViewById(R.id.section_icon);
         
         // 정보 관리자 초기화
@@ -80,57 +85,28 @@ public class center_content_template_activity extends Activity implements Region
     @Override
     protected void onResume() {
         super.onResume();
-        // 리스너 등록
         infoManager.addListener(this);
     }
     
     @Override
     protected void onPause() {
         super.onPause();
-        // 리스너 해제
         infoManager.removeListener(this);
-        // 섹션 표시 중지
         handler.removeCallbacks(sectionDisplayRunnable);
     }
     
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // 앱 종료 시 정보 업데이트 중지 및 자원 해제
         infoManager.stopInfoUpdates();
         infoManager.cleanup();
     }
     
-    /**
-     * 섹션을 순차적으로 표시하는 Runnable
-     */
     private Runnable sectionDisplayRunnable = new Runnable() {
         @Override
         public void run() {
             if (currentInfo != null) {
-                String displayText = "";
-                int iconResId = 0;
-                
-                switch (currentSectionIndex) {
-                    case 0:
-                        displayText = getEnvironmentInfo();
-                        iconResId = sectionIcons[0];
-                        break;
-                    case 1:
-                        displayText = getWeatherInfo();
-                        iconResId = sectionIcons[1];
-                        break;
-                    case 2:
-                        displayText = getControlInfo();
-                        iconResId = sectionIcons[2];
-                        break;
-                }
-                
-                // 아이콘 설정
-                sectionIcon.setImageResource(iconResId);
-                
-                // 텍스트 설정
-                mainText.setText(Html.fromHtml(displayText, Html.FROM_HTML_MODE_LEGACY));
+                updateDisplay();
                 
                 // 다음 섹션으로 이동
                 currentSectionIndex = (currentSectionIndex + 1) % 3;
@@ -141,48 +117,45 @@ public class center_content_template_activity extends Activity implements Region
         }
     };
     
-    /**
-     * 환경 정보 섹션 텍스트 생성
-     */
-    private String getEnvironmentInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<big>온도: ").append(currentInfo.getTemperature()).append("°C</big>\n\n")
-          .append("<big>    습도: ").append(currentInfo.getHumidity()).append("%</big>\n\n")
-          .append("<big>    CO2: ").append(currentInfo.getCo2()).append("ppm</big>");
-        return sb.toString();
+    private void updateDisplay() {
+        // 모든 TextView 초기화
+        for (TextView tv : infoTexts) {
+            tv.setVisibility(View.VISIBLE);
+        }
+        
+        // 아이콘 설정
+        sectionIcon.setImageResource(sectionIcons[currentSectionIndex]);
+        
+        switch (currentSectionIndex) {
+            case 0: // 환경 정보
+                infoTexts[0].setText("온도: " + currentInfo.getTemperature() + "°C");
+                infoTexts[1].setText("습도: " + currentInfo.getHumidity() + "%");
+                infoTexts[2].setText("CO2: " + currentInfo.getCo2() + "ppm");
+                infoTexts[3].setVisibility(View.GONE);
+                infoTexts[4].setVisibility(View.GONE);
+                break;
+                
+            case 1: // 기상 정보
+                infoTexts[0].setText("외부온도: " + currentInfo.getOutdoorTemp() + "°C");
+                infoTexts[1].setText("일사량: " + currentInfo.getRadiation() + "W/㎡");
+                infoTexts[2].setText("풍향: " + currentInfo.getWindDirection());
+                infoTexts[3].setText("풍속: " + currentInfo.getWindSpeed() + "m/s");
+                infoTexts[4].setText("강우량: " + currentInfo.getRainfall() + "mm");
+                break;
+                
+            case 2: // 제어 정보
+                infoTexts[0].setText("천창: " + currentInfo.getSkyWindow());
+                infoTexts[1].setText("CO2발생기: " + currentInfo.getCo2Generator());
+                infoTexts[2].setText("냉난방기: " + currentInfo.getHvacStatus());
+                infoTexts[3].setVisibility(View.GONE);
+                infoTexts[4].setVisibility(View.GONE);
+                break;
+        }
     }
     
-    /**
-     * 기상 정보 섹션 텍스트 생성
-     */
-    private String getWeatherInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<big>외부온도: ").append(currentInfo.getOutdoorTemp()).append("°C</big>\n\n")
-          .append("<big>    일사량: ").append(currentInfo.getRadiation()).append("W/㎡</big>\n\n")
-          .append("<big>    풍향: ").append(currentInfo.getWindDirection()).append("</big>\n\n")
-          .append("<big>    풍속: ").append(currentInfo.getWindSpeed()).append("m/s</big>\n\n")
-          .append("<big>    강우량: ").append(currentInfo.getRainfall()).append("mm</big>");
-        return sb.toString();
-    }
-    
-    /**
-     * 제어 정보 섹션 텍스트 생성
-     */
-    private String getControlInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<big>천창: ").append(currentInfo.getSkyWindow()).append("</big>\n\n")
-          .append("<big>    CO2발생기: ").append(currentInfo.getCo2Generator()).append("</big>\n\n")
-          .append("<big>    냉난방기: ").append(currentInfo.getHvacStatus()).append("</big>");
-        return sb.toString();
-    }
-    
-    /**
-     * 정보 업데이트 이벤트 핸들러
-     */
     @Override
     public void onRegionInfoUpdated(RegionInfo info) {
         currentInfo = info;
-        // 섹션 표시 시작
         handler.removeCallbacks(sectionDisplayRunnable);
         handler.post(sectionDisplayRunnable);
     }
