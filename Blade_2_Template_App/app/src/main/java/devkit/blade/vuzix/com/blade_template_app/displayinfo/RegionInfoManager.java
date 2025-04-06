@@ -184,6 +184,26 @@ public class RegionInfoManager {
     }
     
     /**
+     * 풍향 각도를 방향으로 변환
+     */
+    private String convertWindDirection(String angle) {
+        try {
+            double windAngle = Double.parseDouble(angle);
+            if (windAngle >= 337.5 || windAngle < 22.5) return "북";
+            if (windAngle >= 22.5 && windAngle < 67.5) return "북동";
+            if (windAngle >= 67.5 && windAngle < 112.5) return "동";
+            if (windAngle >= 112.5 && windAngle < 157.5) return "남동";
+            if (windAngle >= 157.5 && windAngle < 202.5) return "남";
+            if (windAngle >= 202.5 && windAngle < 247.5) return "남서";
+            if (windAngle >= 247.5 && windAngle < 292.5) return "서";
+            if (windAngle >= 292.5 && windAngle < 337.5) return "북서";
+            return angle;
+        } catch (NumberFormatException e) {
+            return angle;
+        }
+    }
+
+    /**
      * JSON 응답을 파싱합니다.
      */
     private void parseJsonResponse(String jsonResponse) {
@@ -194,25 +214,34 @@ public class RegionInfoManager {
             if (fieldsArray.length() > 0) {
                 JSONObject data = fieldsArray.getJSONObject(0);
                 
-                // 외부온도 (xouttemp)
-                String outTemp = data.getString("xouttemp");
+                RegionInfo info = new RegionInfo();
                 
-                // 순환온도 (Xsupplytemp1)
-                String supplyTemp = data.getString("Xsupplytemp1");
+                // 환경 정보 설정
+                info.setTemperature(data.optString("xintemp1", "--"));  // 내부 온도
+                info.setHumidity(data.optString("xinhum1", "--"));      // 내부 습도
+                info.setCo2(data.optString("xco2", "--"));              // CO2
+                //info.setPh(data.optString("xph", "--"));                // PH
                 
-                // 현재 시간
-                String currentTime = timeFormat.format(new Date());
+                // 제어 정보 설정
+                info.setSkyWindow(data.optString("xwin1auto", "--"));   // 천창 상태
+                info.setCo2Generator(data.optString("xco2auto", "--")); // CO2 발생기 상태
+                info.setHvacStatus(data.optString("XheatandCool1Auto", "--")); // 냉난방기 상태
                 
-                // 정보 텍스트 구성 (기존 형식으로 복원)
-                String infoText = currentTime + " 외부온도: " + outTemp + "°C 순환온도: " + supplyTemp + "°C";
+                // 기상 정보 설정
+                info.setOutdoorTemp(data.optString("xouttemp", "--"));  // 외부 온도
+                info.setRadiation(data.optString("xsunvol", "--"));     // 일사량
+                String windAngle = data.optString("xwinddirec", "--");  // 풍향 각도
+                info.setWindDirection(convertWindDirection(windAngle));  // 풍향 (방향으로 변환)
+                info.setWindSpeed(data.optString("xwindsp", "--"));     // 풍속
+                info.setRainfall(data.optString("xrain", "--"));        // 강우량
                 
-                final RegionInfo info = new RegionInfo("", infoText, outTemp, supplyTemp);
+                final RegionInfo finalInfo = info;
                 
                 // UI 스레드에서 업데이트
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        currentInfo = info;
+                        currentInfo = finalInfo;
                         notifyListeners();
                     }
                 });
@@ -230,11 +259,9 @@ public class RegionInfoManager {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                String currentTime = timeFormat.format(new Date());
-                // 기존 형식으로 복원
-                String infoText = currentTime + " 외부온도: --°C 순환온도: --°C";
-                
-                currentInfo = new RegionInfo("", infoText, "--", "--");
+                RegionInfo fallbackInfo = new RegionInfo();
+                fallbackInfo.setDisplayText("데이터를 가져올 수 없습니다.");
+                currentInfo = fallbackInfo;
                 notifyListeners();
             }
         });

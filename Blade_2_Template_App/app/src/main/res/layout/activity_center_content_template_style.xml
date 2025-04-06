@@ -17,31 +17,40 @@
     <!-- 제목 텍스트 -->
 
     <!-- 메인 정보 표시 영역 -->
-    <TextView
-        android:id="@+id/main_text"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/info_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:gravity="center"
         android:background="#33000000"
-        android:fontFamily="sans-serif-condensed"
-        android:gravity="right"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:shadowColor="#80000000"
-        android:shadowDx="1.5"
-        android:shadowDy="1.5"
-        android:shadowRadius="2"
-        android:text="@string/loading_info"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="normal"
-        android:visibility="visible" />
+        android:padding="10dp">
+
+        <!-- 아이콘 -->
+        <ImageView
+            android:id="@+id/section_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_environment"
+            android:contentDescription="섹션 아이콘" />
+
+        <!-- 정보 텍스트 -->
+        <TextView
+            android:id="@+id/main_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:shadowColor="#80000000"
+            android:shadowDx="1.5"
+            android:shadowDy="1.5"
+            android:shadowRadius="2" />
+
+    </LinearLayout>
 
 </RelativeLayout>
