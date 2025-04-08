@@ -39,7 +39,7 @@ public class center_content_template_activity extends Activity implements Region
     private int currentSectionIndex = 0;
     
     // 섹션 표시 간격 (밀리초)
-    private static final long SECTION_DISPLAY_INTERVAL = 2000;
+    private static final long SECTION_DISPLAY_INTERVAL = 3000;
     
     // 현재 RegionInfo 객체
     private RegionInfo currentInfo;

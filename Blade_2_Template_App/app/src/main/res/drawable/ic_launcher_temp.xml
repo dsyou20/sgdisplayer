@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    
+    <!-- 온도계 외관 -->
+    <path
+        android:fillColor="#FF4444"
+        android:pathData="M12,2C11.45,2 11,2.45 11,3V15.17C9.83,15.58 9,16.69 9,18C9,19.66 10.34,21 12,21C13.66,21 15,19.66 15,18C15,16.69 14.17,15.58 13,15.17V3C13,2.45 12.55,2 12,2Z"/>
+    
+    <!-- 온도계 수은주 -->
+    <path
+        android:fillColor="#FF0000"
+        android:pathData="M12,15.17V3C12,2.45 11.8,2.2 12,2.2C12.2,2.2 12,2.45 12,3V15.17C10.83,15.58 10,16.69 10,18C10,19.66 11.34,21 12,21C12.66,21 14,19.66 14,18C14,16.69 13.17,15.58 12,15.17Z"/>
+    
+    <!-- 온도계 하단 원형 부분 -->
+    <path
+        android:fillColor="#FF0000"
+        android:pathData="M12,17C13.1,17 14,17.9 14,19C14,20.1 13.1,21 12,21C10.9,21 10,20.1 10,19C10,17.9 10.9,17 12,17"/>
+</vector> 
